@@ -1,1 +1,1 @@
-Steps to deploy an update:
+S3 command to sync local directory and s3 bucket: aws s3 sync . s3://www.edwinroosevelt.com 
