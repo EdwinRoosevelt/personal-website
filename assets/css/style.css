@@ -1093,7 +1093,8 @@ section .container {
 	text-align: right;
 	font-size: 13px;
 	color: #fff;
-	z-index: 0;
+	/* Above #header (997), which fills the screen and would swallow clicks. */
+	z-index: 998;
 }
 @media (max-width: 992px) {
 	.credits {
