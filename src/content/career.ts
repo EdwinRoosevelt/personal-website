@@ -37,15 +37,24 @@ export const revisions: Revision[] = [
   {
     rev: "C",
     from: "Mar 2023",
-    to: null,
+    to: "Aug 2026",
     role: "Full-stack MERN developer",
     org: "Beanstalkedu Services",
     place: "Kolkata",
     notes: [
-      "Build responsive interfaces in React, and the Node.js services behind them.",
-      "Design and maintain application logic and secure authentication.",
-      "Keep technical documentation current so knowledge doesn't live in one head.",
+      "Built responsive interfaces in React, and the Node.js services behind them.",
+      "Designed and maintained application logic and secure authentication.",
+      "Kept technical documentation current so knowledge didn't live in one head.",
     ],
+  },
+  {
+    rev: "D",
+    from: "Aug 2026",
+    to: null,
+    role: "Senior developer",
+    org: "Beanstalkedu Services",
+    place: "Kolkata",
+    notes: ["Promoted from full-stack developer in the same team."],
   },
 ];
 

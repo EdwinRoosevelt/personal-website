@@ -1,5 +1,4 @@
 import { education, revisions, type Revision } from "@/content/career";
-import { RevisionCloud } from "@/components/revision-cloud";
 import { Sheet } from "@/components/sheet";
 
 export function Career() {
@@ -10,8 +9,8 @@ export function Career() {
       id="career"
       aside={
         <>
-          Newest first. The current role is clouded in red, the way changes are marked on a
-          revised drawing.
+          Newest first. The role I&rsquo;m in now carries the red stamp, like an approved sheet
+          in a drawing set.
         </>
       }
     >
@@ -27,10 +26,18 @@ export function Career() {
       <ol className="space-y-px">
         {latestFirst.map((r) =>
           r.to === null ? (
-            <li key={r.rev} className="my-6">
-              <RevisionCloud rev={r.rev}>
-                <Row r={r} />
-              </RevisionCloud>
+            <li
+              key={r.rev}
+              className="relative overflow-clip border-b border-l-[3px] border-b-ink/20 border-l-redline bg-paper-2"
+            >
+              <Row r={r} />
+              <p
+                aria-hidden
+                className="stamp absolute top-5 right-4 md:top-auto md:right-6 md:bottom-6"
+              >
+                <span className="text-base">Current</span>
+                <span>since {r.from}</span>
+              </p>
             </li>
           ) : (
             <li key={r.rev} className="border-b border-ink/20">
@@ -68,6 +75,7 @@ function Row({ r }: { r: Revision }) {
       </p>
       <p className="font-mono text-sm md:pt-1">
         {r.from} – {r.to ?? <strong className="font-medium text-redline">present</strong>}
+        {current && <span className="sr-only"> (current role)</span>}
       </p>
       <div>
         <h3 className="text-xl leading-snug font-semibold">{r.role}</h3>

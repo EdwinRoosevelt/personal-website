@@ -33,7 +33,7 @@ export function Hero() {
 
           <ol className="mt-8 grid gap-x-8 gap-y-4 sm:mt-0 sm:grid-cols-3" aria-label="At a glance">
             <Callout n={1} href="#career" delay={900}>
-              Full-stack developer at Beanstalk, Kolkata
+              Senior developer at Beanstalk, Kolkata
             </Callout>
             <Callout n={2} href="#about" delay={1050}>
               Mechanical engineer by degree, Amrita &rsquo;19

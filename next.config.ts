@@ -9,6 +9,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  // Off so an unknown /gallery/<slug>/ answers with a real 404 status instead of
+  // streaming a 200 shell before notFound() runs.
+  partialPrefetching: false,
   // The old static site served every page from a folder, so URLs end in a slash.
   // Keeping that means /edz-central/ and /edz-central/privacy/ (registered with
   // Google's OAuth consent screen) resolve exactly as before.

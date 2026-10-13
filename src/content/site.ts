@@ -1,15 +1,15 @@
 export const site = {
   name: "Edwin Roosevelt",
   url: "https://www.edwinroosevelt.com",
-  role: "Full-stack developer",
+  role: "Senior developer",
   location: "Kolkata, India",
   email: "b.edwinroosevelt@gmail.com",
   description:
-    "Edwin Roosevelt is a full-stack developer in Kolkata. Mechanical engineer by degree, building for the web since 2021. Also a photographer and designer.",
+    "Edwin Roosevelt is a senior developer in Kolkata. Mechanical engineer by degree, building for the web since 2021. Also a photographer and designer.",
   resume:
     "https://drive.google.com/file/d/1xI5ExTde9kriVnSUI9WkuehAsmC3LOFL/view?usp=drive_link",
   formspree: "https://formspree.io/f/mdobnepg",
-  revision: "2.0",
+  revision: "2.1",
   issued: "2026-10-13",
 } as const;
 
@@ -26,7 +26,6 @@ export const sheets = [
   { id: "top", title: "Introduction", drafting: "General arrangement" },
   { id: "about", title: "About", drafting: "General notes" },
   { id: "career", title: "Career", drafting: "Revision history" },
-  { id: "skills", title: "Skills", drafting: "Parts list" },
   { id: "projects", title: "Projects", drafting: "Assemblies" },
   { id: "gallery", title: "Gallery", drafting: "Field photographs" },
   { id: "contact", title: "Contact", drafting: "Issue for contact" },

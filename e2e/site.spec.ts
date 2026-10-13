@@ -6,7 +6,7 @@ test.describe("home", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Edwin\s*Roosevelt/);
     const titles = await page.locator("section h2").allTextContents();
-    expect(titles).toEqual(["About", "Career", "Skills", "Projects", "Gallery", "Contact"]);
+    expect(titles).toEqual(["About", "Career", "Projects", "Gallery", "Contact"]);
   });
 
   test("title block follows the section in view", async ({ page }) => {
@@ -14,7 +14,7 @@ test.describe("home", () => {
     const nav = page.getByRole("navigation", { name: "Site" });
     await page.evaluate(() => document.getElementById("career")!.scrollIntoView());
     await expect(nav).toContainText("Career");
-    await expect(nav).toContainText("3/7");
+    await expect(nav).toContainText("3/6");
   });
 
   test("sheet index opens, navigates and closes", async ({ page }) => {
@@ -25,6 +25,18 @@ test.describe("home", () => {
     await dialog.getByRole("link", { name: /Projects/ }).click();
     await expect(dialog).toBeHidden();
     await expect(page).toHaveURL(/#projects$/);
+  });
+
+  test("never scrolls sideways", async ({ page }) => {
+    await page.goto("/");
+    // Scroll through so scroll-driven animations (the career stamp) run.
+    for (const id of ["about", "career", "projects", "gallery", "contact"]) {
+      await page.evaluate((id) => document.getElementById(id)!.scrollIntoView(), id);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow, `horizontal overflow at #${id}`).toBe(0);
+    }
   });
 
   test("theme toggle switches and persists", async ({ page }) => {

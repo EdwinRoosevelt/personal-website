@@ -153,9 +153,6 @@ function SheetIndex({
         <Link href="/gallery/" onClick={close} className="underline hover:text-redline">
           All work
         </Link>
-        <Link href="/edz-central/" onClick={close} className="underline hover:text-redline">
-          Edz Central
-        </Link>
         <a href={site.resume} target="_blank" rel="noreferrer" className="underline hover:text-redline">
           Résumé ↗
         </a>

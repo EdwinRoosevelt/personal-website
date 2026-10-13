@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import manolai from "@/assets/projects/manolai_banner.png";
 import bitbash from "@/assets/projects/bitbash-banner.png";
 import timetabler from "@/assets/projects/timetabler_banner.png";
 import logparser from "@/assets/projects/logparser_banner.png";
@@ -11,18 +12,18 @@ export type Project = {
   href: string | null;
   /** Shown instead of a link when the project isn't reachable. */
   status?: string;
-  image: StaticImageData | null;
+  image: StaticImageData;
   size: "major" | "mini";
 };
 
 export const projects: Project[] = [
   {
-    name: "Edz Central",
+    name: "Manolai",
     summary:
-      "A private life record: diary, trips, photos and spending in one timeline. Bank alerts become transactions, and receipt emails fill in what each payment was for. Ships with Life Record, an Android app.",
-    stack: ["Android", "MongoDB Atlas", "AWS S3", "Gmail API", "Claude API"],
-    href: "/edz-central/",
-    image: null,
+      "Wedding websites, one per couple at its own address. Before the day, guests open a sealed-envelope invitation that counts down to the wedding; afterwards the site becomes a keepsake album. Couples send their details through a form, and each site is reviewed and published from one dashboard.",
+    stack: ["Next.js", "React", "TypeScript"],
+    href: "https://manolai.edwinroosevelt.com",
+    image: manolai,
     size: "major",
   },
   {

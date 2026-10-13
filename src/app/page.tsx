@@ -4,7 +4,6 @@ import { Contact } from "@/components/contact";
 import { GallerySection } from "@/components/gallery-section";
 import { Hero } from "@/components/hero";
 import { Projects } from "@/components/projects";
-import { Skills } from "@/components/skills";
 import { revisions } from "@/content/career";
 import { site, socials } from "@/content/site";
 
@@ -33,7 +32,6 @@ export default function Home() {
       <Hero />
       <About />
       <Career />
-      <Skills />
       <Projects />
       <GallerySection />
       <Contact />

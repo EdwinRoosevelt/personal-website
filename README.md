@@ -2,7 +2,7 @@
 
 Edwin Roosevelt's personal site. Next.js 16 (App Router, Cache Components), Tailwind CSS 4, deployed on Vercel.
 
-The design treats the site as an engineering drawing set: the bottom strip is a drawing title block and doubles as navigation, the career section is a revision table, and the current role is marked with a redline revision cloud.
+The design treats the site as an engineering drawing set: the bottom strip is a drawing title block and doubles as navigation, the career section is a revision table, and the current role carries a red approval stamp.
 
 ## Develop
 
@@ -20,7 +20,6 @@ npm test           # builds, serves on :3100, runs Playwright (desktop + mobile)
 | ----------------------------------- | ----------------------------- |
 | Name, email, résumé link, socials   | `src/content/site.ts`         |
 | Jobs and education                  | `src/content/career.ts`       |
-| Skills                              | `src/content/skills.ts`       |
 | Projects                            | `src/content/projects.ts`     |
 | Gallery works and home-page selects | `src/content/gallery.ts`      |
 | Colours and type                    | `src/app/globals.css`, `src/app/layout.tsx` |

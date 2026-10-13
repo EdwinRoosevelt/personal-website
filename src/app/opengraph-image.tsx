@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { site } from "@/content/site";
 
-export const alt = "Edwin Roosevelt, full-stack developer";
+export const alt = "Edwin Roosevelt, senior developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

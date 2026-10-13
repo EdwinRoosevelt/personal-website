@@ -35,7 +35,8 @@ export function About() {
           </p>
           <p>
             Since 2021 I&rsquo;ve worked across the stack: as an SRE on SonyLIV&rsquo;s streaming
-            platform, building web apps at Bibox Labs, and now full-stack at Beanstalk in Kolkata.
+            platform, building web apps at Bibox Labs, and full-stack at Beanstalk in Kolkata,
+            where I&rsquo;m now a senior developer.
             I work in JavaScript, TypeScript, Python and Java, and I&rsquo;m the person on the team
             who can explain a technical problem to someone who isn&rsquo;t technical.
           </p>
