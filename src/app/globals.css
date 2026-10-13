@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
 /*
- * Drafting-film palette. Paper and graphite carry the page; non-photo blue
- * draws construction lines; redline is reserved for markup (revision cloud,
- * current-state marks, focus).
+ * Two-ink risograph palette. Blue carries the type and photos; fluorescent
+ * pink is the second drum, overprinted on top (multiply), so where the two
+ * meet they darken like real ink. Pink is never used for small text: the
+ * deeper `pink-text` is.
  */
 :root {
-  --paper: #e7ece9;
-  --paper-2: #dde4e0;
-  --ink: #1e2226;
-  --lead: #59626b;
-  --construction: #8cc4d8;
-  --redline: #c0301f;
-  --rule: #b9c4bf;
+  --paper: #ecedea;
+  --paper-2: #e2e3df;
+  --ink: #1c2238;
+  --lead: #4a5068;
+  --blue: #3255a4;
+  --pink: #ff48b0;
+  --pink-text: #c2176f;
+  --blend: multiply;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --paper: #161b1f;
-  --paper-2: #1d2328;
-  --ink: #e2e8e4;
-  --lead: #96a19c;
-  --construction: #3f7f95;
-  --redline: #ff6b57;
-  --rule: #2f3940;
+  --paper: #14151b;
+  --paper-2: #1c1d25;
+  --ink: #e9eaf0;
+  --lead: #9ea3b8;
+  --blue: #86a2ff;
+  --pink: #ff6bc1;
+  --pink-text: #ff6bc1;
+  /* Light ink on dark paper adds rather than multiplies. */
+  --blend: screen;
   color-scheme: dark;
 }
 
@@ -32,19 +36,19 @@
   --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
   --color-lead: var(--lead);
-  --color-construction: var(--construction);
-  --color-redline: var(--redline);
-  --color-rule: var(--rule);
-  --font-display: var(--font-barlow-condensed);
-  --font-sans: var(--font-atkinson);
-  --font-mono: var(--font-plex-mono);
+  --color-blue: var(--blue);
+  --color-pink: var(--pink);
+  --color-pink-text: var(--pink-text);
+  --font-display: var(--font-unbounded);
+  --font-sans: var(--font-schibsted);
+  --font-mono: var(--font-martian);
 }
 
 @layer base {
   html {
     background: var(--paper);
     color: var(--ink);
-    scroll-padding-top: 2rem;
+    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -61,52 +65,73 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Paper grain over everything, like uncoated riso stock. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: var(--blend);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
   ::selection {
-    background: var(--construction);
-    color: var(--ink);
+    background: var(--pink);
+    color: #1c2238;
   }
 
   :focus-visible {
-    outline: 2px solid var(--redline);
+    outline: 3px solid var(--pink);
     outline-offset: 3px;
   }
 
   a {
     text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
+    text-decoration-thickness: 1.5px;
   }
 }
 
 @layer components {
-  /* Small caps-style label used for drafting annotations and table heads. */
+  /* Small print: labels, dates, captions. */
   .annot {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--lead);
   }
 
   .display {
     font-family: var(--font-display);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-    line-height: 0.88;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
   }
 
-  /* Graph-paper grid, 8 px minor / 40 px major, in construction blue. */
-  .graph {
-    background-image:
-      linear-gradient(to right, color-mix(in oklab, var(--construction) 45%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, var(--construction) 45%, transparent) 1px, transparent 1px),
-      linear-gradient(to right, color-mix(in oklab, var(--construction) 18%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, var(--construction) 18%, transparent) 1px, transparent 1px);
-    background-size:
-      40px 40px,
-      40px 40px,
-      8px 8px,
-      8px 8px;
+  /*
+   * Overprint: the same words printed twice, blue then pink, slightly out of
+   * register. The pink pass is offset by --dx/--dy, which the hero nudges
+   * with the pointer.
+   */
+  .overprint {
+    position: relative;
+    display: inline-block;
+    color: var(--blue);
+  }
+  .overprint::after {
+    /* The empty alt text keeps the duplicate out of the accessibility tree. */
+    content: attr(data-text);
+    content: attr(data-text) / "";
+    position: absolute;
+    inset: 0;
+    color: var(--pink);
+    mix-blend-mode: var(--blend);
+    transform: translate(var(--dx, 0.045em), var(--dy, 0.03em));
+    pointer-events: none;
+    user-select: none;
   }
 
   .btn {
@@ -114,116 +139,114 @@
     align-items: center;
     gap: 0.5rem;
     min-height: 2.75rem;
-    padding: 0 1.125rem;
-    border: 1.5px solid var(--ink);
+    padding: 0 1.25rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
+    font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     transition:
       background-color 150ms,
-      color 150ms;
+      color 150ms,
+      box-shadow 150ms,
+      translate 150ms;
   }
   .btn:hover {
-    background: var(--ink);
-    color: var(--paper);
+    box-shadow: 3px 3px 0 var(--pink);
+    translate: -2px -2px;
   }
   .btn-solid {
-    background: var(--ink);
+    background: var(--blue);
+    border-color: var(--blue);
     color: var(--paper);
   }
-  .btn-solid:hover {
-    background: transparent;
-    color: var(--ink);
+
+  /*
+   * Halftone duotone: the photo printed in blue through a dot screen. It
+   * comes back to full colour on hover or keyboard focus.
+   */
+  .halftone {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--blue);
   }
-}
-
-/*
- * Rubber stamp marking the current role. A turbulence mask breaks up the ink
- * like a real stamp. Where scroll-driven animations are supported it lands as
- * the row scrolls into view; elsewhere it simply sits there.
- */
-.stamp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.4rem 0.8rem;
-  border: 2px solid currentColor;
-  outline: 1px solid currentColor;
-  outline-offset: 2px;
-  border-radius: 3px;
-  color: var(--redline);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  line-height: 1.1;
-  text-transform: uppercase;
-  rotate: -8deg;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.75'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-@keyframes stamp-in {
-  0% {
+  .halftone img {
+    filter: grayscale(1) contrast(1.15) brightness(1.08);
+    mix-blend-mode: screen;
+    transition:
+      filter 300ms,
+      scale 500ms;
+  }
+  .halftone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at center, var(--paper) 0.9px, transparent 1.3px);
+    background-size: 4px 4px;
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    transition: opacity 300ms;
+  }
+  :is(a, button):is(:hover, :focus-visible) .halftone img,
+  .halftone[data-reveal] img {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+  :is(a, button):is(:hover, :focus-visible) .halftone::after,
+  .halftone[data-reveal]::after {
     opacity: 0;
-    scale: 1.9;
   }
-  55% {
-    opacity: 1;
-    scale: 0.94;
-  }
-  100% {
-    opacity: 1;
-    scale: 1;
+
+  /* Riso registration mark, printed in the margins. */
+  .reg {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    background:
+      linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat,
+      linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
   }
 }
 
+/* Pink highlighter swiped across the current role. */
+.highlight {
+  background: linear-gradient(var(--pink), var(--pink)) left 60% / 100% 0.55em no-repeat;
+  mix-blend-mode: var(--blend);
+}
+@keyframes swipe {
+  from {
+    background-size: 0% 0.55em;
+  }
+}
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .stamp {
-      animation: stamp-in linear both;
+    .highlight {
+      animation: swipe linear both;
       animation-timeline: view();
-      animation-range: entry 40% cover 40%;
+      animation-range: entry 30% cover 40%;
     }
   }
 }
 
-/* Leader and dimension lines draw in once on load. */
-@keyframes draw-x {
-  from {
-    transform: scaleX(0);
-  }
-}
-@keyframes draw-y {
-  from {
-    transform: scaleY(0);
-  }
-}
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
 }
-
 @media (prefers-reduced-motion: no-preference) {
-  .anim-draw-x {
-    animation: draw-x 700ms cubic-bezier(0.65, 0, 0.35, 1) both;
-    animation-delay: var(--delay, 0ms);
-  }
-  .anim-draw-y {
-    animation: draw-y 450ms cubic-bezier(0.65, 0, 0.35, 1) both;
-    animation-delay: var(--delay, 0ms);
-    transform-origin: top;
-  }
   .anim-fade {
-    animation: fade-up 500ms ease-out both;
+    animation: fade-up 600ms ease-out both;
     animation-delay: var(--delay, 0ms);
   }
 }
 
-/* Gallery photo morph between the contact sheet and the single-frame view. */
+/* Gallery photo morph between the grid and the single-work view. */
 ::view-transition-group(*) {
   animation-duration: 380ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

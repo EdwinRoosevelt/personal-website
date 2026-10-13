@@ -9,8 +9,7 @@ export const site = {
   resume:
     "https://drive.google.com/file/d/1xI5ExTde9kriVnSUI9WkuehAsmC3LOFL/view?usp=drive_link",
   formspree: "https://formspree.io/f/mdobnepg",
-  revision: "2.1",
-  issued: "2026-10-13",
+  updated: "2026-10-13",
 } as const;
 
 export const socials = [
@@ -21,14 +20,14 @@ export const socials = [
   { label: "Facebook", href: "https://www.facebook.com/Edwinroosevelt", handle: "Edwinroosevelt" },
 ] as const;
 
-/** Sections of the home page, in order. The title block tracks which one is in view. */
-export const sheets = [
-  { id: "top", title: "Introduction", drafting: "General arrangement" },
-  { id: "about", title: "About", drafting: "General notes" },
-  { id: "career", title: "Career", drafting: "Revision history" },
-  { id: "projects", title: "Projects", drafting: "Assemblies" },
-  { id: "gallery", title: "Gallery", drafting: "Field photographs" },
-  { id: "contact", title: "Contact", drafting: "Issue for contact" },
+/** Sections of the home page, in order. The header marks the one in view. */
+export const sections = [
+  { id: "top", title: "Intro", eyebrow: "Now showing" },
+  { id: "about", title: "About", eyebrow: "The person" },
+  { id: "career", title: "Career", eyebrow: "Tour dates" },
+  { id: "projects", title: "Projects", eyebrow: "Releases" },
+  { id: "gallery", title: "Gallery", eyebrow: "Prints" },
+  { id: "contact", title: "Contact", eyebrow: "Bookings" },
 ] as const;
 
-export type SheetId = (typeof sheets)[number]["id"];
+export type SectionId = (typeof sections)[number]["id"];

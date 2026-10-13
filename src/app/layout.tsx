@@ -1,29 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible_Next, Barlow_Condensed, IBM_Plex_Mono } from "next/font/google";
+import { Martian_Mono, Schibsted_Grotesk, Unbounded } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Frame } from "@/components/frame";
-import { TitleBlock } from "@/components/title-block";
+import { Header } from "@/components/header";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const display = Barlow_Condensed({
-  variable: "--font-barlow-condensed",
+const display = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["500", "800"],
 });
 
-const body = Atkinson_Hyperlegible_Next({
-  variable: "--font-atkinson",
+const body = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
   weight: "variable",
-  // next/font has no metrics for this face yet, so name the fallback directly.
-  adjustFontFallback: false,
-  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const mono = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
@@ -48,8 +44,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e7ece9" },
-    { media: "(prefers-color-scheme: dark)", color: "#161b1f" },
+    { media: "(prefers-color-scheme: light)", color: "#ecedea" },
+    { media: "(prefers-color-scheme: dark)", color: "#14151b" },
   ],
 };
 
@@ -73,9 +69,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <Frame />
-        <div className="pb-24 md:px-6">{children}</div>
-        <TitleBlock />
+        <Header />
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

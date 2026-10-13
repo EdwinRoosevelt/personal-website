@@ -34,8 +34,8 @@ export function ContactForm() {
 
   if (status.state === "sent") {
     return (
-      <div role="status" className="border border-ink p-8">
-        <p className="annot !text-redline">Received</p>
+      <div role="status" className="rounded-[1.75rem] border-2 border-ink p-8">
+        <p className="annot !text-pink-text">Received</p>
         <p className="display mt-2 text-4xl">Message sent</p>
         <p className="mt-3 text-lead">Thanks for writing. I&rsquo;ll reply to the email you gave.</p>
         <button type="button" onClick={() => setStatus({ state: "idle" })} className="btn mt-6">
@@ -57,7 +57,7 @@ export function ContactForm() {
           name="message"
           required
           rows={6}
-          className="block w-full resize-y border border-ink bg-transparent px-3 py-2.5 placeholder:text-lead/70 focus:bg-paper-2 focus:outline-2 focus:outline-redline"
+          className="block w-full resize-y rounded-xl border-2 border-ink bg-transparent px-3 py-2.5 placeholder:text-lead/70 focus:bg-paper-2 focus:outline-2 focus:outline-pink"
           placeholder="What are you working on?"
         />
       </label>
@@ -67,7 +67,7 @@ export function ContactForm() {
         <button type="submit" disabled={sending} className="btn btn-solid disabled:opacity-60">
           {sending ? "Sending…" : "Send message"}
         </button>
-        <p id="form-status" role="alert" className="text-sm text-redline">
+        <p id="form-status" role="alert" className="text-sm font-medium text-pink-text">
           {status.state === "error" && `Message not sent. ${status.message}`}
         </p>
       </div>
@@ -94,7 +94,7 @@ function Field({
         name={name}
         required
         autoComplete={autoComplete}
-        className="block h-11 w-full border border-ink bg-transparent px-3 focus:bg-paper-2 focus:outline-2 focus:outline-redline"
+        className="block h-11 w-full rounded-xl border-2 border-ink bg-transparent px-3 focus:bg-paper-2 focus:outline-2 focus:outline-pink"
       />
     </label>
   );

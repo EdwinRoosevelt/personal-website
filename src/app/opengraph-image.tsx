@@ -8,22 +8,36 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const fonts = join(process.cwd(), "src/assets/fonts");
-const barlow = await readFile(join(fonts, "BarlowCondensed-SemiBold.ttf"));
-const plex = await readFile(join(fonts, "IBMPlexMono-Regular.ttf"));
+const unbounded = await readFile(join(fonts, "Unbounded-ExtraBold.ttf"));
+const martian = await readFile(join(fonts, "MartianMono-Medium.ttf"));
 
-const paper = "#e7ece9";
-const ink = "#1e2226";
-const lead = "#59626b";
-const redline = "#c0301f";
-const construction = "rgba(140,196,216,0.45)";
+const paper = "#ecedea";
+const ink = "#1c2238";
+const blue = "#3255a4";
+const pink = "#ff48b0";
 
+/** The hero as a poster: the name overprinted in blue and pink. */
 export default function OpengraphImage() {
-  const cells = [
-    ["Drawn by", "E. Roosevelt"],
-    ["Title", site.role],
-    ["Location", site.location],
-    ["Rev", site.revision],
-  ];
+  const name = (color: string, dx: number, dy: number, blend?: "multiply") => (
+    <div
+      style={{
+        position: "absolute",
+        left: 64 + dx,
+        top: 150 + dy,
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "Unbounded",
+        fontSize: 150,
+        lineHeight: 0.92,
+        letterSpacing: -6,
+        color,
+        mixBlendMode: blend,
+      }}
+    >
+      <span>edwin</span>
+      <span>roosevelt</span>
+    </div>
+  );
 
   return new ImageResponse(
     (
@@ -32,55 +46,54 @@ export default function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          position: "relative",
           background: paper,
-          backgroundImage: `linear-gradient(to right, ${construction} 1px, transparent 1px), linear-gradient(to bottom, ${construction} 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-          padding: 24,
-          fontFamily: "Plex",
+          fontFamily: "Martian",
           color: ink,
         }}
       >
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", border: `2px solid ${ink}` }}>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 64px" }}>
-            <div style={{ display: "flex", alignItems: "center", color: redline, fontSize: 18, letterSpacing: 2 }}>
-              <div style={{ width: 2, height: 22, background: redline }} />
-              <div style={{ flex: 1, height: 2, background: redline }} />
-              <div style={{ padding: "0 16px" }}>MAR 2021 → TODAY · BUILDING FOR THE WEB</div>
-              <div style={{ flex: 1, height: 2, background: redline }} />
-              <div style={{ width: 2, height: 22, background: redline }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", fontFamily: "Barlow", fontSize: 200, lineHeight: 0.86, marginTop: 18 }}>
-              <span>EDWIN</span>
-              <span>ROOSEVELT</span>
-            </div>
-          </div>
-          <div style={{ display: "flex", borderTop: `2px solid ${ink}`, height: 92, background: paper }}>
-            {cells.map(([label, value], i) => (
-              <div
-                key={label}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  padding: "0 24px",
-                  flex: i === 1 ? 1.4 : 1,
-                  borderLeft: i === 0 ? "none" : `1px solid ${lead}`,
-                }}
-              >
-                <span style={{ fontSize: 14, color: lead, letterSpacing: 1.5 }}>{label.toUpperCase()}</span>
-                <span style={{ fontSize: 24, marginTop: 6 }}>{value.toUpperCase()}</span>
-              </div>
-            ))}
-          </div>
+        <div
+          style={{
+            position: "absolute",
+            left: 64,
+            right: 64,
+            top: 56,
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: 18,
+            letterSpacing: 1,
+            color: blue,
+          }}
+        >
+          <span>PRINTED IN TWO INKS</span>
+          <span>{site.location.toUpperCase()}</span>
+        </div>
+        {name(blue, 0, 0)}
+        {name(pink, 8, 5, "multiply")}
+        <div
+          style={{
+            position: "absolute",
+            left: 64,
+            right: 64,
+            bottom: 52,
+            display: "flex",
+            justifyContent: "space-between",
+            borderTop: `3px solid ${ink}`,
+            paddingTop: 18,
+            fontSize: 22,
+          }}
+        >
+          <span>{site.role.toUpperCase()} · BEANSTALK</span>
+          <div style={{ width: 14, height: 14, borderRadius: 7, background: pink, alignSelf: "center" }} />
+          <span>PHOTOGRAPHER & DESIGNER</span>
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Barlow", data: barlow, weight: 600, style: "normal" },
-        { name: "Plex", data: plex, weight: 400, style: "normal" },
+        { name: "Unbounded", data: unbounded, weight: 800, style: "normal" },
+        { name: "Martian", data: martian, weight: 500, style: "normal" },
       ],
     },
   );

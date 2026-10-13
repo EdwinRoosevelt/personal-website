@@ -2,7 +2,7 @@
 
 Edwin Roosevelt's personal site. Next.js 16 (App Router, Cache Components), Tailwind CSS 4, deployed on Vercel.
 
-The design treats the site as an engineering drawing set: the bottom strip is a drawing title block and doubles as navigation, the career section is a revision table, and the current role carries a red approval stamp.
+The design is a two-ink risograph poster: blue and fluorescent pink, overprinted. Headings are printed twice slightly out of register (the hero's pink pass drifts with the pointer), photos are blue halftone until you hover them, and career reads like a gig poster's tour dates with a pink highlighter on the current role.
 
 ## Develop
 
@@ -26,7 +26,7 @@ npm test           # builds, serves on :3100, runs Playwright (desktop + mobile)
 
 Gallery and project images are in `src/assets/` and imported statically, so `next/image` gets their dimensions and blur placeholders at build time. To add a work, drop the image in `src/assets/gallery/`, import it in `gallery.ts` and add an entry. It gets its own page at `/gallery/<slug>/` automatically.
 
-When you publish a content change, bump `revision` and `issued` in `site.ts`. They appear in the title block.
+When you publish a content change, bump `updated` in `site.ts` (it feeds the sitemap and footer).
 
 ## Edz Central pages
 

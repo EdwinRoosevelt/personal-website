@@ -3,7 +3,7 @@ import { gallery } from "@/content/gallery";
 import { site } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date(site.issued);
+  const lastModified = new Date(site.updated);
   return [
     { url: `${site.url}/`, lastModified, priority: 1 },
     { url: `${site.url}/gallery/`, lastModified, priority: 0.7 },

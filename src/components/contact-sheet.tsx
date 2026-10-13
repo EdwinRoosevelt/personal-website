@@ -4,16 +4,16 @@ import { ViewTransition } from "react";
 import { categoryLabels, gallery, type Work } from "@/content/gallery";
 
 /**
- * Thumbnails laid out like a photographer's contact sheet, each with its
- * frame number. Selecting one morphs it into the single-frame view.
+ * Thumbnails printed halftone in blue, each with its print number. Hover or
+ * focus brings back the colour; selecting one morphs it into its own page.
  */
 export function ContactSheet({ works, priority = 0 }: { works: Work[]; priority?: number }) {
   return (
-    <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
       {works.map((w, i) => (
         <li key={w.slug}>
           <Link href={`/gallery/${w.slug}/`} className="group block">
-            <div className="relative aspect-square overflow-hidden bg-paper-2">
+            <div className="halftone aspect-square rounded-2xl">
               <ViewTransition name={`work-${w.slug}`}>
                 <Image
                   src={w.image}
@@ -26,7 +26,7 @@ export function ContactSheet({ works, priority = 0 }: { works: Work[]; priority?
               </ViewTransition>
             </div>
             <div className="mt-2 flex items-baseline justify-between gap-2">
-              <span className="truncate text-sm group-hover:underline">{w.title}</span>
+              <span className="truncate text-sm font-medium group-hover:underline">{w.title}</span>
               <span className="annot shrink-0">{frameLabel(w)}</span>
             </div>
             <span className="sr-only">{categoryLabels[w.category]}</span>

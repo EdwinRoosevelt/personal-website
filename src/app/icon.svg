@@ -1,10 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <style>
-    .m { stroke: #1e2226; } .b { fill: #e7ece9; }
-    @media (prefers-color-scheme: dark) { .m { stroke: #e2e8e4; } .b { fill: #161b1f; } }
-  </style>
-  <circle class="b m" cx="32" cy="32" r="30" stroke-width="3"/>
-  <path class="m" d="M12 18h40l-6 9.5H18z" stroke-width="3.5" stroke-linejoin="round"/>
-  <path class="m" d="M19 32h26l-5.5 9H24.5z" stroke-width="3.5" stroke-linejoin="round"/>
-  <path class="m" d="M14 45.5h26L35 53H19z" stroke-width="3.5" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" fill="#3255a4"/>
+  <text x="32" y="45" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="36" fill="#ff48b0">e</text>
+  <text x="30" y="43" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="36" fill="#ecedea" style="mix-blend-mode:multiply">e</text>
 </svg>

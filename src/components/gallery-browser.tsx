@@ -26,7 +26,7 @@ export function GalleryBrowser() {
             type="button"
             aria-pressed={filter === o.value}
             onClick={() => startTransition(() => setFilter(o.value))}
-            className="btn !min-h-9 aria-pressed:bg-ink aria-pressed:text-paper"
+            className="btn !min-h-9 aria-pressed:border-pink aria-pressed:bg-pink aria-pressed:text-[#1c2238]"
           >
             {o.label}
             <span className="opacity-60">{o.count}</span>

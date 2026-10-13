@@ -2,25 +2,27 @@ import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
 test.describe("home", () => {
-  test("renders every sheet in order", async ({ page }) => {
+  test("renders every section in order", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Edwin\s*Roosevelt/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/edwin\s*roosevelt/i);
     const titles = await page.locator("section h2").allTextContents();
-    expect(titles).toEqual(["About", "Career", "Projects", "Gallery", "Contact"]);
+    expect(titles.map((t) => t.toLowerCase())).toEqual(["about", "career", "projects", "gallery", "contact"]);
   });
 
-  test("title block follows the section in view", async ({ page }) => {
+  test("header marks the section in view", async ({ page, isMobile }) => {
     await page.goto("/");
-    const nav = page.getByRole("navigation", { name: "Site" });
     await page.evaluate(() => document.getElementById("career")!.scrollIntoView());
-    await expect(nav).toContainText("Career");
-    await expect(nav).toContainText("3/6");
+    // Keyboard, not click: Playwright's click scrolls the sticky header "into view",
+    // which moves the page and changes the section in view.
+    if (isMobile) await page.keyboard.press("Control+k");
+    const scope = isMobile ? page.getByRole("dialog", { name: "Sections" }) : page.getByRole("navigation", { name: "Site" });
+    await expect(scope.getByRole("link", { name: /^Career/ })).toHaveAttribute("aria-current", "location");
   });
 
-  test("sheet index opens, navigates and closes", async ({ page }) => {
+  test("section menu opens with the keyboard, navigates and closes", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("button", { name: "Index" }).click();
-    const dialog = page.getByRole("dialog", { name: "Sheet index" });
+    await page.keyboard.press("Control+k");
+    const dialog = page.getByRole("dialog", { name: "Sections" });
     await expect(dialog).toBeVisible();
     await dialog.getByRole("link", { name: /Projects/ }).click();
     await expect(dialog).toBeHidden();
@@ -141,8 +143,8 @@ test("old URLs redirect", async ({ request }) => {
   expect(res.headers().location).toBe("/");
 });
 
-test("unknown page shows the 404 sheet", async ({ page }) => {
+test("unknown page shows the 404 page", async ({ page }) => {
   const res = await page.goto("/does-not-exist/");
   expect(res?.status()).toBe(404);
-  await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("404");
 });

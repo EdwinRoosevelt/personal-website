@@ -27,7 +27,7 @@ export function ThemeToggle() {
       }}
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
-      className="flex w-12 items-center justify-center border-r border-ink/25 hover:bg-paper-2"
+      className="grid size-10 shrink-0 place-items-center rounded-full hover:bg-paper-2"
     >
       {/* Half-filled circle reads as "contrast"; it flips with the theme. */}
       <svg viewBox="0 0 20 20" className="size-4" aria-hidden>
