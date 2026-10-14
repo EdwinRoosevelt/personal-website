@@ -1,5 +1,5 @@
 import Image from "next/image";
-import me from "@/assets/me.jpg";
+import me from "@/assets/me-circle.png";
 import { Sheet } from "@/components/sheet";
 
 const interests = [
@@ -59,15 +59,13 @@ export function About() {
         </div>
 
         <figure className="self-start md:sticky md:top-12">
-          <div className="relative border border-ink p-2">
-            <Image
-              src={me}
-              alt="Portrait of Edwin Roosevelt"
-              placeholder="blur"
-              sizes="(min-width: 768px) 17rem, 100vw"
-              className="w-full grayscale-[35%]"
-            />
-          </div>
+          {/* A cut-out portrait on a transparent background, so no frame or blur placeholder. */}
+          <Image
+            src={me}
+            alt="Portrait of Edwin Roosevelt"
+            sizes="(min-width: 768px) 17rem, 18rem"
+            className="mx-auto w-full max-w-72 md:max-w-none"
+          />
           <figcaption className="annot mt-2 flex justify-between">
             <span>Fig. 1</span>
             <span>The author</span>
