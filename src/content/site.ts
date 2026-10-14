@@ -9,8 +9,8 @@ export const site = {
   resume:
     "https://drive.google.com/file/d/1xI5ExTde9kriVnSUI9WkuehAsmC3LOFL/view?usp=drive_link",
   formspree: "https://formspree.io/f/mdobnepg",
-  revision: "2.1",
-  issued: "2026-10-13",
+  revision: "2.2",
+  issued: "2026-10-15",
 } as const;
 
 export const socials = [

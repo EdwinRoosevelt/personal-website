@@ -20,9 +20,9 @@ export const projects: Project[] = [
   {
     name: "Manolai",
     summary:
-      "Wedding websites, one per couple at its own address. Before the day, guests open a sealed-envelope invitation that counts down to the wedding; afterwards the site becomes a keepsake album. Couples send their details through a form, and each site is reviewed and published from one dashboard.",
+      "Made-to-order wedding websites for Indian weddings, each at the couple's own address. Before the day, guests open a sealed-envelope invitation with every event and venue, RSVPs, wishes and a countdown; when the day arrives the page turns on its own into a keepsake album.",
     stack: ["Next.js", "React", "TypeScript"],
-    href: "https://manolai.edwinroosevelt.com",
+    href: "https://manolai.com",
     image: manolai,
     size: "major",
   },
