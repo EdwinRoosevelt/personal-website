@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+/*
+ * Drafting-film palette. Paper and graphite carry the page; non-photo blue
+ * draws construction lines; redline is reserved for markup (revision cloud,
+ * current-state marks, focus).
+ */
+:root {
+  --paper: #e7ece9;
+  --paper-2: #dde4e0;
+  --ink: #1e2226;
+  --lead: #59626b;
+  --construction: #8cc4d8;
+  --redline: #c0301f;
+  --rule: #b9c4bf;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #161b1f;
+  --paper-2: #1d2328;
+  --ink: #e2e8e4;
+  --lead: #96a19c;
+  --construction: #3f7f95;
+  --redline: #ff6b57;
+  --rule: #2f3940;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-lead: var(--lead);
+  --color-construction: var(--construction);
+  --color-redline: var(--redline);
+  --color-rule: var(--rule);
+  --font-display: var(--font-barlow-condensed);
+  --font-sans: var(--font-atkinson);
+  --font-mono: var(--font-plex-mono);
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    scroll-padding-top: 2rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--construction);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--redline);
+    outline-offset: 3px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+@layer components {
+  /* Small caps-style label used for drafting annotations and table heads. */
+  .annot {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lead);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.88;
+  }
+
+  /* Graph-paper grid, 8 px minor / 40 px major, in construction blue. */
+  .graph {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--construction) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--construction) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to right, color-mix(in oklab, var(--construction) 18%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--construction) 18%, transparent) 1px, transparent 1px);
+    background-size:
+      40px 40px,
+      40px 40px,
+      8px 8px,
+      8px 8px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.125rem;
+    border: 1.5px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition:
+      background-color 150ms,
+      color 150ms;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-solid {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-solid:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+}
+
+/*
+ * Rubber stamp marking the current role. A turbulence mask breaks up the ink
+ * like a real stamp. Where scroll-driven animations are supported it lands as
+ * the row scrolls into view; elsewhere it simply sits there.
+ */
+.stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 3px;
+  color: var(--redline);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  rotate: -8deg;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.75'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    scale: 1.9;
+  }
+  55% {
+    opacity: 1;
+    scale: 0.94;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp {
+      animation: stamp-in linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 40%;
+    }
+  }
+}
+
+/* Leader and dimension lines draw in once on load. */
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes draw-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-draw-x {
+    animation: draw-x 700ms cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .anim-draw-y {
+    animation: draw-y 450ms cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: var(--delay, 0ms);
+    transform-origin: top;
+  }
+  .anim-fade {
+    animation: fade-up 500ms ease-out both;
+    animation-delay: var(--delay, 0ms);
+  }
+}
+
+/* Gallery photo morph between the contact sheet and the single-frame view. */
+::view-transition-group(*) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
